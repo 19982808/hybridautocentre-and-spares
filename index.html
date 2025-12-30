@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hybrid Garage & Spares</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Poppins, Arial, sans-serif; }
+body { background: #f5f5f5; color: #000; font-weight: bold; }
+.hidden { display: none !important; }
+.hidden-section { display: none; }
+/* HEADER / NAVBAR */
+.site-header { display: flex; justify-content: space-between; align-items: center; background: #4888C4; color: #fff; padding: 15px 20px; position: sticky; top: 0; z-index: 1000; }
+nav a, nav button { color: #fff; background: none; border: none; margin-left: 15px; cursor: pointer; font-weight: bold; }
+nav a.active { color: #FFD700; border-bottom: 2px solid #fff; }
+.logo-container { display: flex; align-items: center; }
+.logo { height: 120px; display: block; margin-right: 10px; }
+/* MOBILE */
+.menu-toggle { display: none; font-size: 22px; color: #fff; background: none; border: none; }
+@media(max-width:768px){
+    nav { display: none; flex-direction: column; background: #222; position: absolute; top: 100%; left: 0; right: 0; }
+    nav.open { display: flex; }
+    .menu-toggle { display: block; }
+    nav a, nav button { padding: 15px; border-top: 1px solid #333; }
+}
+/* HERO */
+.hero { height: 400px; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; overflow: hidden; z-index: 1; }
+.hero.hidden-section { display: none !important; }
+.slideshow, .slide { position: absolute; inset: 0; }
+.slide { background-size: cover; height:400px; background-position: center; opacity: 0; transition: opacity 0.2s; }
+.slide.active { opacity: 1; }
+.hero-content { position: relative; z-index: 2; }
+/* SECTIONS */
+section { padding: 40px 20px; max-width: 1200px; margin: auto; background: #111; color: #fff; font-weight: bold; }
+/* PRODUCTS */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.product { background: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,.1); color: #000; font-weight: bold; }
+.product h3, .product p, .product span { color: #000; }
+.product img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
+.product-icon { font-size: 50px; color: #0077cc; margin-bottom: 10px; }
+/* BUTTON */
+.cta-btn { padding: 10px 20px; background: #0077cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin-top: 5px; }
+.cta-btn:hover { background: #005fa3; }
+/* CART */
+#cart-count { background: red; padding: 2px 6px; border-radius: 50%; font-size: 12px; }
+/* MODAL */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; }
+.modal-content { background: #fff; padding: 20px; width: 90%; max-width: 600px; border-radius: 8px; max-height: 90vh; overflow: auto; }
+.close { float: right; font-size: 24px; cursor: pointer; }
+/* CHATBOT */
+#chatbot { position: fixed; bottom: 20px; right: 20px; width: 300px; max-height: 400px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,.3); overflow: hidden; display: flex; flex-direction: column; }
+#chat-header { background: #4888C4; color: #fff; padding: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+#chat-body { flex: 1; padding: 10px; overflow-y: auto; display: none; }
+.chat-msg { margin-bottom: 10px; }
+.chat-msg.user { text-align: right; color: #0077cc; }
+.chat-msg.bot { text-align: left; color: #000; }
+/* FOOTER */
+footer { text-align: center; padding: 20px; background: #222; color: #4888C4; }
+.social-links a { margin: 0 5px; color: #4888C4; font-size: 20px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER / NAV -->
+<header class="site-header">
+  <div class="logo-container">
+    <img src="images/logo.png" class="logo" alt="Hybrid Centre Logo">
+    <h2>HYBRID CENTRE</h2>
+  </div>
+  <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+  <nav>
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#our-services" class="nav-link">Our Services</a>
+    <a href="#products" class="nav-link">Products</a>
+    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#payment" class="nav-link">Payment</a>
+    <a href="#location" class="nav-link">Location</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#our-links" class="nav-link">Our Links</a>
+    <button id="adminLoginBtn">Admin</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="slideshow">
+    <div class="slide active" style="background-image:url('images/hero1.png')"></div>
+    <div class="slide" style="background-image:url('images/hero2.png')"></div>
+    <div class="slide" style="background-image:url('images/hero3.png')"></div>
+    <div class="slide" style="background-image:url('images/hero4.png')"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Hybrid Garage & Vehicle Spares</h1>
+    <p>Quality • Batteries • Modules • Services</p>
+    <button class="cta-btn" id="bookServiceBtn">Explore</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page hidden-section">
+  <h2>About Us</h2>
+  <p>We provide comprehensive hybrid vehicle services and high-quality spares. Combining garage expertise with spares supply for all hybrid vehicles.</p>
+</section>
+
+<!-- OUR SERVICES -->
+<section id="our-services" class="page hidden-section">
+  <h2>Our Services</h2>
+  <div class="product-grid">
+    <div class="product">
+      <i class="fa-solid fa-car-wrench product-icon"></i>
+      <h3>Hybrid Diagnostics</h3>
+      <p>Full hybrid system scans and ECU diagnostics.</p>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-tools product-icon"></i>
+      <h3>Repair & Maintenance</h3>
+      <p>Battery, inverter, engine, and transmission repair.</p>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-bolt product-icon"></i>
+      <h3>Electrical Systems</h3>
+      <p>Inverter, motors, and regenerative braking repair.</p>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-car-side product-icon"></i>
+      <h3>Suspension & Engine</h3>
+      <p>Shocks, struts, pistons, filters, spark plugs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS / SPARES SHOP -->
+<section id="products" class="page hidden-section">
+  <h2>Our Products</h2>
+  <div id="product-list" class="product-grid">
+    <!-- All spares products -->
+    <div class="product">
+      <i class="fa-solid fa-battery-full product-icon"></i>
+      <h3>Hybrid Batteries & Modules</h3>
+      <p>High-quality battery packs compatible with hybrid vehicles.</p>
+      <p>Price: 500</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Hybrid Batteries" data-price="500">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-gears product-icon"></i>
+      <h3>Electric Motors & Generators</h3>
+      <p>Reliable motors and motor-generators.</p>
+      <p>Price: 750</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Electric Motors" data-price="750">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-bolt product-icon"></i>
+      <h3>Inverters & Power Control Units</h3>
+      <p>Efficient energy management components.</p>
+      <p>Price: 400</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Inverters" data-price="400">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-engine product-icon"></i>
+      <h3>Engine Components</h3>
+      <p>Spark plugs, filters, pistons, and exhaust parts.</p>
+      <p>Price: 350</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Engine Components" data-price="350">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-fan product-icon"></i>
+      <h3>Cooling Systems</h3>
+      <p>Cooling fans, pumps & thermal components.</p>
+      <p>Price: 200</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Cooling Systems" data-price="200">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-car-side product-icon"></i>
+      <h3>Suspension Parts</h3>
+      <p>Shocks, struts, and springs.</p>
+      <p>Price: 250</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Suspension Parts" data-price="250">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-gears product-icon"></i>
+      <h3>Gearbox & Transmission</h3>
+      <p>Automatic & CVT gearboxes.</p>
+      <p>Price: 600</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Gearbox" data-price="600">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-triangle-exclamation product-icon"></i>
+      <h3>Auxiliary & Safety Parts</h3>
+      <p>High-voltage cables and safety components.</p>
+      <p>Price: 150</p>
+      <button class="cta-btn add-to-cart-btn" data-name="Auxiliary Parts" data-price="150">Buy Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- CART -->
+<section id="cart" class="page hidden-section">
+<h2>Your Cart</h2>
+<div id="cart-items"></div>
+<h3 id="cart-total">Total: 0</h3>
+<div class="cart-actions">
+    <button class="cta-btn" id="checkoutPaybill">Checkout via Paybill</button>
+</div>
+<div id="paybill-info" class="hidden-section">
+<h4>Pay via M-Pesa Paybill</h4>
+<ul>
+<li>Paybill Number: <strong>222111</strong></li>
+<li>Account Number: <strong>5825469</strong></li>
+<li>Business Name: <strong>Hybrid Centre</strong></li>
+</ul>
+<p>After payment, click the button below to send confirmation via WhatsApp:</p>
+<button class="cta-btn" id="confirmPaymentBtn">Send Confirmation via WhatsApp</button>
+</div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment" class="page hidden-section">
+<h2>Payment</h2>
+<p>Payment is via M-Pesa Paybill only. See cart checkout for details.</p>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="page hidden-section">
+<h2>Locations</h2>
+<p><strong>Garage:</strong> Kirinyaga Road, behind Indian Mosque, Grogon Lane, Nairobi</p>
+<p><strong>Spares Shop:</strong> Industrial Area, Nairobi</p>
+<iframe width="100%" height="300"
+src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+Lane+Nairobi&output=embed"></iframe>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="page hidden-section">
+<h2>Contact</h2>
+<p>Call Garage: <a href="tel:+254780328599">+254 780 328 599</a></p>
+<p>Call Spares Shop: <a href="tel:+254701234567">+254 701 234 567</a></p>
+<p>Email: <a href="mailto:info@hybridcentre.com">info@hybridcentre.com</a></p>
+<p>WhatsApp Garage: <a href="https://wa.me/254780328599" target="_blank">Chat with Garage</a></p>
+<p>WhatsApp Shop: <a href="https://wa.me/254701234567" target="_blank">Chat with Shop</a></p>
+</section>
+
+<!-- OUR LINKS / SOCIAL MEDIA -->
+<section id="our-links" class="page hidden-section">
+<h2>Our Links</h2>
+<div class="social-links">
+<a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+<a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+</div>
+</section>
+
+<!-- ADMIN -->
+<div class="modal hidden" id="adminModal">
+<div class="modal-content">
+<span class="close" id="closeAdmin">&times;</span>
+<h3>Add Product</h3>
+<input id="admin-name" placeholder="Name">
+<input id="admin-price" type="number" placeholder="Price">
+<button id="addProductBtn">Add</button>
+<ul id="admin-list"></ul>
+</div>
+</div>
+
+<!-- CHATBOT -->
+<div id="chatbot">
+  <div id="chat-header">Chat <span id="chat-toggle"><i class="fa fa-chevron-up"></i></span></div>
+  <div id="chat-body"></div>
+  <input type="text" id="chat-input" placeholder="Type message..." style="padding:10px;border:none;border-top:1px solid #ccc;">
+</div>
+
+<footer>&copy; 2025 Hybrid Centre</footer>
+
+<script>
+// SPA Navigation
+const hero = document.querySelector(".hero");
+const pages = document.querySelectorAll(".page");
+const navLinks = document.querySelectorAll(".nav-link");
+function showPage(id) {
+  pages.forEach(p => { p.classList.add("hidden-section"); p.classList.remove("show"); });
+  if (id === "#home") hero.classList.remove("hidden-section");
+  else { hero.classList.add("hidden-section"); const page = document.querySelector(id); if(page){page.classList.remove("hidden-section"); setTimeout(()=>page.classList.add("show"),10);}}
+  navLinks.forEach(l => l.classList.remove("active"));
+  document.querySelector(`a[href="${id}"]`)?.classList.add("active");
+  history.pushState(null,"",id);
+}
+
+// Hero slideshow
+const slides = document.querySelectorAll(".slide");
+let s = 0;
+setInterval(()=>{
+  if(!hero.classList.contains("hidden-section")){
+    slides.forEach(sl=>sl.classList.remove("active"));
+    s=(s+1)%slides.length;
+    slides[s].classList.add("active");
+  }
+},5000);
+
+// Cart
+let cart = [];
+document.querySelectorAll(".add-to-cart-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{ cart.push({name:btn.dataset.name,price:Number(btn.dataset.price)}); updateCart(); });
+});
+function updateCart(){
+  const cartItems=document.getElementById("cart-items");
+  let total=0;
+  cartItems.innerHTML="";
+  cart.forEach(item=>{ cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price; });
+  document.getElementById("cart
