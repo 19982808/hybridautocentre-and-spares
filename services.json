@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Hybrid Diagnostics",
+    "shortDescription": "Advanced hybrid system scans and ECU diagnostics.",
+    "fullDescription": "Our hybrid diagnostics service uses manufacturer-grade diagnostic tools to scan hybrid control modules, ECUs, inverters, battery management systems, and regenerative braking components. We identify fault codes, performance inconsistencies, sensor failures, and communication errors between hybrid subsystems.",
+    "icon": "fa-magnifying-glass"
+  },
+  {
+    "name": "Battery Replacement & Testing",
+    "shortDescription": "Replace old hybrid batteries and test performance.",
+    "fullDescription": "We safely replace high-voltage hybrid batteries and conduct full performance testing to ensure maximum efficiency and reliability.",
+    "icon": "fa-battery-three-quarters"
+  },
+  {
+    "name": "Engine Maintenance & Repairs",
+    "shortDescription": "Comprehensive engine checks and repairs.",
+    "fullDescription": "We handle both traditional and hybrid engine components, including spark plugs, filters, pistons, cooling systems, and exhaust repairs.",
+    "icon": "fa-engine"
+  },
+  {
+    "name": "Inverter & Power Unit Servicing",
+    "shortDescription": "Optimize energy management units.",
+    "fullDescription": "We service inverters, power control units, and hybrid energy management systems to ensure optimal performance.",
+    "icon": "fa-bolt"
+  },
+  {
+    "name": "Suspension & Braking Services",
+    "shortDescription": "Shocks, struts, brakes & safety checks.",
+    "fullDescription": "We provide maintenance and replacement for suspension systems, brake pads, regenerative braking checks, and safety inspections.",
+    "icon": "fa-car-side"
+  },
+  {
+    "name": "Cooling Systems Service",
+    "shortDescription": "Keep your hybrid vehicle cool.",
+    "fullDescription": "We service cooling fans, pumps, and thermal systems to prevent overheating and maintain peak performance.",
+    "icon": "fa-fan"
+  },
+  {
+    "name": "Gearbox & Transmission Maintenance",
+    "shortDescription": "Automatic & CVT gearbox servicing.",
+    "fullDescription": "We perform full gearbox diagnostics, servicing, and replacements to keep your hybrid transmission smooth and efficient.",
+    "icon": "fa-gears"
+  },
+  {
+    "name": "Auxiliary & Safety Systems",
+    "shortDescription": "High-voltage cable and safety inspections.",
+    "fullDescription": "We ensure all auxiliary and safety components, including HV cables and connectors, are safe and functioning properly.",
+    "icon": "fa-triangle-exclamation"
+  }
+]
