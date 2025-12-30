@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Hybrid Batteries & Modules",
+    "price": 500,
+    "description": "High-quality battery packs compatible with hybrid vehicles.",
+    "icon": "fa-battery-full"
+  },
+  {
+    "name": "Electric Motors & Generators",
+    "price": 750,
+    "description": "Reliable motors and motor-generators.",
+    "icon": "fa-gears"
+  },
+  {
+    "name": "Inverters & Power Control Units",
+    "price": 400,
+    "description": "Efficient energy management components.",
+    "icon": "fa-bolt"
+  },
+  {
+    "name": "Engine Components",
+    "price": 350,
+    "description": "Spark plugs, filters, pistons, and exhaust parts.",
+    "icon": "fa-engine"
+  },
+  {
+    "name": "Cooling Systems",
+    "price": 200,
+    "description": "Cooling fans, pumps & thermal components.",
+    "icon": "fa-fan"
+  },
+  {
+    "name": "Suspension Parts",
+    "price": 250,
+    "description": "Shocks, struts, and springs.",
+    "icon": "fa-car-side"
+  },
+  {
+    "name": "Gearbox & Transmission",
+    "price": 600,
+    "description": "Automatic & CVT gearboxes.",
+    "icon": "fa-gears"
+  },
+  {
+    "name": "Auxiliary & Safety Parts",
+    "price": 150,
+    "description": "High-voltage cables and safety components.",
+    "icon": "fa-triangle-exclamation"
+  }
+]
