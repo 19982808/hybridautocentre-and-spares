@@ -3,229 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hybrid Centre | Garage & Spares Shop</title>
-
+<title>Hybrid Garage & Spares Shop</title>
+<link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Arial}
-body{background:#f5f5f5}
-
-/* ===== HEADER ===== */
-header{
-  position:sticky;top:0;z-index:999;
-  background:#4B88C4;color:#fff;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:15px 20px;
-}
-nav a{
-  color:#fff;margin-left:15px;
-  text-decoration:none;font-weight:bold;cursor:pointer;
-}
-
-/* ===== SPA ===== */
-.page{display:none;padding:40px 20px;max-width:1200px;margin:auto}
-.page.active{display:block}
-
-/* ===== HERO ===== */
-#home{background:#111;color:#fff;text-align:center}
-.hero{height:350px;display:flex;align-items:center;justify-content:center}
-
-/* ===== GRIDS ===== */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-
-/* ===== CARDS ===== */
-.card{
-  background:#fff;padding:20px;border-radius:8px;
-  box-shadow:0 4px 8px rgba(0,0,0,.1)
-}
-.card button{
-  margin-top:10px;padding:8px 12px;
-  background:#4B88C4;color:#fff;border:none;border-radius:5px;cursor:pointer
-}
-
-/* ===== CHATBOT ===== */
-#chatbot-toggle{
-  position:fixed;bottom:20px;right:20px;
-  width:60px;height:60px;border-radius:50%;
-  background:#4B88C4;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;z-index:10000;font-size:24px
-}
-#chatbot{
-  position:fixed;bottom:90px;right:20px;
-  width:300px;background:#fff;border-radius:8px;
-  box-shadow:0 5px 15px rgba(0,0,0,.3);
-  display:none;z-index:10000
-}
-#chatbot header{background:#4B88C4;color:#fff;padding:10px}
-#chatbot .body{padding:10px;height:200px;overflow:auto}
-#chatbot input{width:100%;padding:8px;border:1px solid #ccc}
-
-/* ===== FOOTER ===== */
-footer{text-align:center;padding:20px;background:#111;color:#4B88C4}
-</style>
+<script src="js/script.js" defer></script>
 </head>
-
 <body>
 
-<header>
-  <h2>HYBRID CENTRE</h2>
+<!-- HEADER / NAV -->
+<header class="site-header">
+  <div class="logo-container">
+    <img src="images/logo.png" class="logo" alt="Hybrid Garage Logo">
+    <h2>HYBRID GARAGE & SPARES</h2>
+  </div>
+  <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
   <nav>
-    <a data-page="home">Home</a>
-    <a data-page="about">About</a>
-    <a data-page="services">Our Services</a>
-    <a data-page="products">Spares Shop</a>
-    <a data-page="cart">Cart</a>
-    <a data-page="payment">Payment</a>
-    <a data-page="locations">Locations</a>
-    <a data-page="contact">Contact</a>
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#our-services" class="nav-link">Our Services</a>
+      <a href="#products" class="nav-link">Products</a>
+      <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+      <a href="#payment" class="nav-link">Payment</a>
+      <a href="#locations" class="nav-link">Locations</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <button id="adminLoginBtn">Admin</button>
   </nav>
 </header>
 
-<!-- HOME -->
-<section id="home" class="page active">
-  <div class="hero">
-    <div>
-      <h1>Garage Services & Hybrid Spares</h1>
-      <button onclick="showPage('services')">View Our Services</button>
-    </div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="slideshow">
+    <!-- 20 hero slides -->
+    <div class="slide active" style="background-image:url('images/hero1.jpg')"></div>
+    <div class="slide" style="background-image:url('images/hero2.jpg')"></div>
+    <!-- ... hero3.jpg to hero20.jpg ... -->
+    <div class="slide" style="background-image:url('images/hero20.jpg')"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Hybrid Vehicles & Spares</h1>
+    <p>Quality • Batteries • Modules • Repairs</p>
+    <button class="cta-btn" id="shopNowBtn">Shop Now</button>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="page">
-  <h2>About Us</h2>
-  <p>Hybrid Centre offers professional hybrid diagnostics, repairs, and genuine spare parts.</p>
-</section>
-
 <!-- OUR SERVICES -->
-<section id="services" class="page">
+<section id="our-services" class="page hidden-section">
   <h2>Our Services</h2>
-  <div class="grid" id="service-grid"></div>
+  <div id="services-list" class="service-grid">
+    <!-- JS will load services from data/services.json -->
+  </div>
 </section>
-
-<!-- SERVICE DETAIL -->
-<section id="service-detail" class="page"></section>
 
 <!-- PRODUCTS -->
-<section id="products" class="page">
-  <h2>Spares Shop</h2>
-  <div class="grid" id="product-grid"></div>
+<section id="products" class="page hidden-section">
+  <h2>Our Products</h2>
+  <div id="product-list" class="product-grid">
+    <!-- JS will load products from data/products.json -->
+  </div>
 </section>
 
 <!-- CART -->
-<section id="cart" class="page">
+<section id="cart" class="page hidden-section">
   <h2>Your Cart</h2>
   <div id="cart-items"></div>
+  <h3 id="cart-total">Total: KES 0</h3>
+  <div class="cart-actions">
+    <button class="cta-btn" id="checkoutPaybill">Checkout via Paybill</button>
+  </div>
+  <div id="paybill-info" class="hidden-section">
+    <h4>Pay via M-Pesa Paybill</h4>
+    <ul>
+      <li>Paybill Number: <strong>222111</strong></li>
+      <li>Account Number: <strong>5825469</strong></li>
+      <li>Business Name: <strong>Hybrid Garage & Spares</strong></li>
+    </ul>
+    <button class="cta-btn" id="confirmPaymentBtn">Send Confirmation via WhatsApp</button>
+  </div>
 </section>
 
 <!-- PAYMENT -->
-<section id="payment" class="page">
+<section id="payment" class="page hidden-section">
   <h2>Payment</h2>
-  <p>M-Pesa Paybill: <strong>222111</strong></p>
+  <p>Payment is via M-Pesa Paybill only. See cart checkout for details.</p>
 </section>
 
 <!-- LOCATIONS -->
-<section id="locations" class="page">
-  <h2>Our Locations</h2>
-  <p>📍 Kirinyaga Road, Nairobi</p>
-  <p>📍 Naivasha Road, Dagoretti Corner</p>
+<section id="locations" class="page hidden-section">
+  <h2>Locations</h2>
+  <p>Kirinyaga Road, behind Indian Mosque, Grogon Lane, Nairobi</p>
+  <p>Thika Road Garage Branch, Industrial Area</p>
+  <iframe width="100%" height="300" src="https://www.google.com/maps?q=Kirinyaga+Road+Nairobi&output=embed"></iframe>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="page">
+<section id="contact" class="page hidden-section">
   <h2>Contact</h2>
-  <p>📞 <a href="tel:+254780328599">+254 780 328 599</a></p>
-  <p>📧 hybridcentre@gmail.com</p>
-  <p>
-    <a href="#">Facebook</a> |
-    <a href="#">Instagram</a> |
-    <a href="#">WhatsApp</a>
+  <p>Call us: <a href="tel:+254780328599">+254 780 328 599</a></p>
+  <p>Call us: <a href="tel:+254700123456">+254 700 123 456</a></p>
+  <p>Email: <a href="mailto:info@hybridgarage.co.ke">info@hybridgarage.co.ke</a></p>
+  <p>WhatsApp: <a href="https://wa.me/254780328599" target="_blank">Chat with us</a></p>
+  <p>Social: 
+    <a href="#" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+    <a href="#" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+    <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
   </p>
 </section>
 
-<!-- CHATBOT -->
-<div id="chatbot-toggle"><i class="fa fa-comments"></i></div>
-<div id="chatbot">
-  <header>Hybrid Assistant</header>
-  <div class="body" id="chat-log">Hi 👋 How can we help?</div>
-  <input placeholder="Type message…" onkeydown="chat(event)">
+<!-- FLOATING CHATBOT BUTTON -->
+<button id="chatbotToggle" class="chatbot-floating"><i class="fa fa-comments"></i></button>
+<div id="chatbotContainer" class="chatbot hidden-section">
+  <div class="chat-header">Chat with us <span id="chatClose">&times;</span></div>
+  <div class="chat-body" id="chatBody"></div>
+  <input type="text" id="chatInput" placeholder="Ask about services or products...">
+  <button id="chatSend">Send</button>
 </div>
 
-<footer>© 2025 Hybrid Centre</footer>
+<!-- ADMIN -->
+<div class="modal hidden" id="adminModal">
+  <div class="modal-content">
+    <span class="close" id="closeAdmin">&times;</span>
+    <h3>Add Product</h3>
+    <input id="admin-name" placeholder="Name">
+    <input id="admin-price" type="number" placeholder="Price">
+    <button id="addProductBtn">Add</button>
+    <ul id="admin-list"></ul>
+  </div>
+</div>
 
-<script>
-/* ===== SPA ===== */
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-document.querySelectorAll('[data-page]').forEach(a=>{
-  a.onclick=()=>showPage(a.dataset.page);
-});
-
-/* ===== SERVICES JSON ===== */
-fetch('services.json')
-.then(r=>r.json())
-.then(data=>{
-  const g=document.getElementById('service-grid');
-  data.forEach(s=>{
-    g.innerHTML+=`
-      <div class="card">
-        <h3>${s.title}</h3>
-        <p>${s.shortDescription}</p>
-        <button onclick="openService('${s.id}')">Read More</button>
-      </div>`;
-  });
-});
-function openService(id){
-  fetch('services.json').then(r=>r.json()).then(d=>{
-    const s=d.find(x=>x.id===id);
-    document.getElementById('service-detail').innerHTML=`
-      <h2>${s.title}</h2>
-      <p>${s.fullDescription}</p>
-      <button onclick="showPage('services')">⬅ Back</button>`;
-    showPage('service-detail');
-  });
-}
-
-/* ===== PRODUCTS ===== */
-const products=[
- {name:"Hybrid Battery",price:500},
- {name:"Inverter",price:400},
- {name:"Electric Motor",price:750}
-];
-const pg=document.getElementById('product-grid');
-products.forEach(p=>{
-  pg.innerHTML+=`
-   <div class="card">
-    <h3>${p.name}</h3>
-    <p>KES ${p.price}</p>
-    <button onclick="addCart('${p.name}',${p.price})">Add to Cart</button>
-   </div>`;
-});
-
-/* ===== CART ===== */
-let cart=[];
-function addCart(n,p){
-  cart.push({n,p});
-  document.getElementById('cart-items').innerHTML=
-    cart.map(i=>`${i.n} - KES ${i.p}`).join('<br>');
-}
-
-/* ===== CHATBOT ===== */
-const toggle=document.getElementById('chatbot-toggle');
-const bot=document.getElementById('chatbot');
-toggle.onclick=()=>bot.style.display=bot.style.display==='block'?'none':'block';
-function chat(e){
-  if(e.key==='Enter'){
-    document.getElementById('chat-log').innerHTML+=`<br>You: ${e.target.value}`;
-    e.target.value='';
-  }
-}
-</script>
+<footer>
+  &copy; 2025 Hybrid Garage & Spares
+</footer>
 
 </body>
 </html>
