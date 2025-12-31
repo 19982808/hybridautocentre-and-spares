@@ -1,202 +1,215 @@
-// ================= SPA NAVIGATION =================
-const hero = document.querySelector(".hero");
-const pages = document.querySelectorAll(".page");
-const navLinks = document.querySelectorAll(".nav-link");
+document.addEventListener('DOMContentLoaded', () => {
+  // ======= ELEMENTS =======
+  const navLinks = document.querySelectorAll('nav a.nav-link');
+  const pages = document.querySelectorAll('.page');
+  const menuToggle = document.getElementById('menuToggle');
+  const nav = document.querySelector('nav');
 
-function showPage(id) {
-  pages.forEach(p => p.classList.add("hidden-section"));
-  if (id === "#home") {
-    hero.classList.remove("hidden-section");
-  } else {
-    hero.classList.add("hidden-section");
-    const page = document.querySelector(id);
-    if (page) page.classList.remove("hidden-section");
+  const chatToggle = document.getElementById('chatbotToggle');
+  const chatContainer = document.getElementById('chatbotContainer');
+  const chatClose = document.getElementById('chatClose');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+  const chatBody = document.getElementById('chatBody');
+
+  const cartItemsDiv = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  const checkoutBtn = document.getElementById('checkoutPaybill');
+  const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+  const paybillInfo = document.getElementById('paybill-info');
+
+  const servicesList = document.getElementById('services-list');
+  const productList = document.getElementById('product-list');
+
+  const adminModal = document.getElementById('adminModal');
+  const adminBtn = document.getElementById('adminLoginBtn');
+  const closeAdmin = document.getElementById('closeAdmin');
+  const addProductBtn = document.getElementById('addProductBtn');
+  const adminName = document.getElementById('admin-name');
+  const adminPrice = document.getElementById('admin-price');
+  const adminList = document.getElementById('admin-list');
+
+  let cart = [];
+
+  // ======= NAVIGATION =======
+  function showPage(id) {
+    pages.forEach(p => p.classList.add('hidden-section'));
+    const target = document.getElementById(id);
+    if (target) target.classList.remove('hidden-section');
+    history.replaceState(null, '', `#${id}`);
   }
 
-  navLinks.forEach(l => l.classList.remove("active"));
-  document.querySelector(`a[href="${id}"]`)?.classList.add("active");
-  history.pushState(null, "", id);
-}
-
-// Navbar toggle for mobile
-const menuToggle = document.getElementById("menuToggle");
-if (menuToggle) {
-  menuToggle.onclick = () => document.querySelector("nav").classList.toggle("open");
-}
-
-// SPA link clicks
-navLinks.forEach(l => {
-  l.addEventListener("click", e => {
-    e.preventDefault();
-    showPage(l.getAttribute("href"));
-    document.querySelector("nav").classList.remove("open");
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const section = link.getAttribute('href').replace('#', '');
+      showPage(section);
+      if (nav.classList.contains('open')) nav.classList.remove('open');
+    });
   });
-});
 
-// Initialize page
-showPage(location.hash || "#home");
+  menuToggle.addEventListener('click', () => nav.classList.toggle('open'));
 
-// ================= HERO SLIDESHOW =================
-const slides = document.querySelectorAll(".slide");
-let slideIndex = 0;
-setInterval(() => {
-  if (!hero.classList.contains("hidden-section")) {
-    slides.forEach(sl => sl.classList.remove("active"));
-    slideIndex = (slideIndex + 1) % slides.length;
-    slides[slideIndex].classList.add("active");
+  // ======= HERO SLIDESHOW =======
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+  setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }, 4000);
+
+  // ======= CHATBOT =======
+  chatToggle.addEventListener('click', () => chatContainer.classList.toggle('hidden-section'));
+  chatClose.addEventListener('click', () => chatContainer.classList.add('hidden-section'));
+
+  function addMessage(text, type = 'bot-message', html = false) {
+    const div = document.createElement('div');
+    div.className = type;
+    if (html) div.innerHTML = text;
+    else div.textContent = text;
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
   }
-}, 5000);
 
-// ================= LOAD SERVICES & PRODUCTS =================
-async function loadJSON(url) {
-  const res = await fetch(url);
-  return await res.json();
-}
+  function processChatMessage(text) {
+    text = text.toLowerCase();
 
-async function populateServices() {
-  const services = await loadJSON("data/services.json");
-  const container = document.getElementById("services-list");
-  services.forEach(s => {
-    const div = document.createElement("div");
-    div.className = "service";
-    div.innerHTML = `
-      <i class="fa-solid ${s.icon} service-icon"></i>
-      <h3>${s.name}</h3>
-      <p>${s.fullDescription}</p>
-    `;
-    container.appendChild(div);
-  });
-}
-
-async function populateProducts() {
-  const products = await loadJSON("data/products.json");
-  const container = document.getElementById("product-list");
-  products.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <i class="fa-solid ${p.icon} product-icon"></i>
-      <h3>${p.name}</h3>
-      <p>${p.description}</p>
-      <p>Price: KES ${p.price}</p>
-      <button class="cta-btn add-to-cart-btn" data-name="${p.name}" data-price="${p.price}">Buy Now</button>
-    `;
-    container.appendChild(div);
-  });
-
-  // Attach cart events after products are added
-  attachCartEvents();
-}
-
-// ================= CART =================
-let cart = [];
-
-function attachCartEvents() {
-  document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
-    btn.onclick = () => {
-      cart.push({ name: btn.dataset.name, price: Number(btn.dataset.price) });
-      updateCart();
-    };
-  });
-}
-
-function updateCart() {
-  const cartItems = document.getElementById("cart-items");
-  let total = 0;
-  cartItems.innerHTML = "";
-  cart.forEach(item => {
-    cartItems.innerHTML += `${item.name} - KES ${item.price}<br>`;
-    total += item.price;
-  });
-  document.getElementById("cart-count").textContent = cart.length;
-  document.getElementById("cart-total").textContent = `Total: KES ${total}`;
-}
-
-// Checkout via Paybill
-const checkoutBtn = document.getElementById("checkoutPaybill");
-checkoutBtn.onclick = () => {
-  if (cart.length === 0) return alert("Your cart is empty!");
-  document.getElementById("paybill-info").classList.remove("hidden-section");
-};
-
-// WhatsApp Payment Confirmation
-const confirmBtn = document.getElementById("confirmPaymentBtn");
-confirmBtn.onclick = () => {
-  if (cart.length === 0) return alert("Your cart is empty!");
-  let msg = "Payment Confirmation for Order:%0A";
-  let total = 0;
-  cart.forEach(i => { msg += `${i.name} - KES ${i.price}%0A`; total += i.price; });
-  msg += `Total Paid: KES ${total}`;
-  window.open(`https://wa.me/254780328599?text=${msg}`);
-};
-
-// ================= BOOK NOW =================
-const shopNowBtn = document.getElementById("shopNowBtn");
-shopNowBtn.onclick = () => showPage("#products");
-
-// ================= ADMIN MODAL =================
-const modal = document.getElementById("adminModal");
-const adminBtn = document.getElementById("adminLoginBtn");
-const closeAdmin = document.getElementById("closeAdmin");
-if (adminBtn && modal) adminBtn.onclick = () => modal.classList.remove("hidden");
-if (closeAdmin && modal) closeAdmin.onclick = () => modal.classList.add("hidden");
-
-const addProductBtn = document.getElementById("addProductBtn");
-if (addProductBtn) {
-  addProductBtn.onclick = () => {
-    const name = document.getElementById("admin-name").value;
-    const price = Number(document.getElementById("admin-price").value);
-    if (name && price) {
-      cart.push({ name, price });
-      updateCart();
+    if (text.includes('service') || text.includes('services')) {
+      fetch('data/services.json')
+        .then(res => res.json())
+        .then(data => {
+          if (!data.length) return addMessage('No services available.');
+          addMessage('Here are our services:', 'bot-message');
+          data.forEach(s => {
+            addMessage(`
+              <div style="border:1px solid #ccc; padding:8px; margin:5px 0; border-radius:8px;">
+                <strong>${s.name}</strong><br>
+                <small>${s.shortDescription}</small>
+              </div>
+            `, 'bot-message', true);
+          });
+        });
+    } else if (text.includes('product') || text.includes('products')) {
+      fetch('data/products.json')
+        .then(res => res.json())
+        .then(data => {
+          if (!data.length) return addMessage('No products available.');
+          addMessage('Here are our products:', 'bot-message');
+          data.forEach(p => {
+            addMessage(`
+              <div style="border:1px solid #ccc; padding:8px; margin:5px 0; border-radius:8px;">
+                <i class="fas ${p.icon}"></i> <strong>${p.name}</strong> - KES ${p.price}<br>
+                <small>${p.description}</small>
+              </div>
+            `, 'bot-message', true);
+          });
+        });
+    } else if (text.includes('contact')) {
+      showPage('contact');
+      addMessage('You can contact us via phone, email, or WhatsApp.');
+    } else if (text.includes('location')) {
+      showPage('locations');
+      addMessage('Check our locations on the map above.');
+    } else if (text.includes('cart')) {
+      showPage('cart');
+      addMessage('Your cart is displayed above.');
+    } else {
+      addMessage('Type "services", "products", "contact", "location", or "cart" for info.');
     }
-    document.getElementById("admin-name").value = "";
-    document.getElementById("admin-price").value = "";
-  };
-}
-
-// ================= FLOATING CHATBOT =================
-const chatbotBtn = document.getElementById("chatbotToggle");
-const chatbot = document.getElementById("chatbotContainer");
-const chatClose = document.getElementById("chatClose");
-const chatBody = document.getElementById("chatBody");
-const chatInput = document.getElementById("chatInput");
-const chatSend = document.getElementById("chatSend");
-
-chatbotBtn.onclick = () => chatbot.classList.toggle("hidden-section");
-chatClose.onclick = () => chatbot.classList.add("hidden-section");
-
-// Chatbot functionality
-async function getAllItems() {
-  const services = await loadJSON("data/services.json");
-  const products = await loadJSON("data/products.json");
-  return { services, products };
-}
-
-chatSend.onclick = async () => {
-  const query = chatInput.value.toLowerCase();
-  if (!query) return;
-  const { services, products } = await getAllItems();
-  let response = "Sorry, I couldn't find any matching service or product.";
-
-  // Match products
-  const matchedProduct = products.find(p => p.name.toLowerCase().includes(query));
-  if (matchedProduct) {
-    response = `Product: ${matchedProduct.name} - KES ${matchedProduct.price}`;
   }
 
-  // Match services
-  const matchedService = services.find(s => s.name.toLowerCase().includes(query));
-  if (matchedService) {
-    response = `Service: ${matchedService.name} - ${matchedService.shortDescription}`;
+  chatSend.addEventListener('click', () => {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    addMessage(text, 'user-message');
+    chatInput.value = '';
+    processChatMessage(text);
+  });
+
+  chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') chatSend.click(); });
+
+  // ======= LOAD SERVICES & PRODUCTS =======
+  function loadServices() {
+    fetch('data/services.json')
+      .then(res => res.json())
+      .then(data => {
+        servicesList.innerHTML = '';
+        data.forEach(s => {
+          const div = document.createElement('div');
+          div.className = 'service';
+          div.innerHTML = `
+            <i class="service-icon fas ${s.icon}"></i>
+            <h3>${s.name}</h3>
+            <p>${s.shortDescription}</p>
+          `;
+          servicesList.appendChild(div);
+        });
+      });
   }
 
-  chatBody.innerHTML += `<p><strong>You:</strong> ${chatInput.value}</p>`;
-  chatBody.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
-  chatInput.value = "";
-  chatBody.scrollTop = chatBody.scrollHeight;
-};
+  function loadProducts() {
+    fetch('data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        productList.innerHTML = '';
+        data.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'product';
+          div.innerHTML = `
+            <i class="product-icon fas ${p.icon}"></i>
+            <h3>${p.name}</h3>
+            <p>${p.description}</p>
+            <strong>KES ${p.price}</strong>
+            <button class="cta-btn add-to-cart">Add to Cart</button>
+          `;
+          const btn = div.querySelector('.add-to-cart');
+          btn.addEventListener('click', () => {
+            cart.push(p);
+            updateCart();
+          });
+          productList.appendChild(div);
+        });
+      });
+  }
 
-// Initialize
-populateServices();
-populateProducts();
+  function updateCart() {
+    cartItemsDiv.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.textContent = `${item.name} - KES ${item.price}`;
+      cartItemsDiv.appendChild(div);
+      total += item.price;
+    });
+    cartTotal.textContent = `Total: KES ${total}`;
+  }
+
+  checkoutBtn.addEventListener('click', () => paybillInfo.classList.toggle('hidden-section'));
+  confirmPaymentBtn.addEventListener('click', () => {
+    alert('Payment confirmation sent via WhatsApp!');
+  });
+
+  // ======= ADMIN MODAL =======
+  adminBtn.addEventListener('click', () => adminModal.classList.remove('hidden'));
+  closeAdmin.addEventListener('click', () => adminModal.classList.add('hidden'));
+  addProductBtn.addEventListener('click', () => {
+    const name = adminName.value.trim();
+    const price = parseFloat(adminPrice.value);
+    if (!name || isNaN(price)) return alert('Enter valid product info');
+    const li = document.createElement('li');
+    li.textContent = `${name} - KES ${price}`;
+    adminList.appendChild(li);
+    adminName.value = '';
+    adminPrice.value = '';
+  });
+
+  // ======= INITIAL LOAD =======
+  if (window.location.hash) {
+    showPage(window.location.hash.replace('#', ''));
+  } else {
+    showPage('home');
+  }
+  loadServices();
+  loadProducts();
+});
