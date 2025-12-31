@@ -19,7 +19,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #4888C4; /* navbar blue */
+    background: #4888C4;
     color: #fff;
     padding: 15px 20px;
     position: sticky;
@@ -127,7 +127,7 @@ section {
     font-weight: bold;
 }
 
-/* ================= PRODUCTS ================= */
+/* ================= PRODUCTS & SERVICES ================= */
 .product-grid, .service-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -239,7 +239,6 @@ section {
 }
 #chatInput {
     border: 1px solid #ccc;
-    border-radius: 0 0 0 0;
     padding: 8px;
     width: 100%;
     box-sizing: border-box;
