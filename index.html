@@ -3,76 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hybrid Garage & Spares Shop Nairobi</title>
+<title>Hybrid Centre | Garage & Spares Shop</title>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<meta name="description" content="Hybrid vehicle garage and spares shop in Nairobi. Diagnostics, batteries, repairs, and genuine hybrid parts.">
-<meta name="robots" content="index, follow">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Arial}
+body{background:#f5f5f5}
+
+/* ===== HEADER ===== */
+header{
+  position:sticky;top:0;z-index:999;
+  background:#4B88C4;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 20px;
+}
+nav a{
+  color:#fff;margin-left:15px;
+  text-decoration:none;font-weight:bold;cursor:pointer;
+}
+
+/* ===== SPA ===== */
+.page{display:none;padding:40px 20px;max-width:1200px;margin:auto}
+.page.active{display:block}
+
+/* ===== HERO ===== */
+#home{background:#111;color:#fff;text-align:center}
+.hero{height:350px;display:flex;align-items:center;justify-content:center}
+
+/* ===== GRIDS ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+
+/* ===== CARDS ===== */
+.card{
+  background:#fff;padding:20px;border-radius:8px;
+  box-shadow:0 4px 8px rgba(0,0,0,.1)
+}
+.card button{
+  margin-top:10px;padding:8px 12px;
+  background:#4B88C4;color:#fff;border:none;border-radius:5px;cursor:pointer
+}
+
+/* ===== CHATBOT ===== */
+#chatbot-toggle{
+  position:fixed;bottom:20px;right:20px;
+  width:60px;height:60px;border-radius:50%;
+  background:#4B88C4;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10000;font-size:24px
+}
+#chatbot{
+  position:fixed;bottom:90px;right:20px;
+  width:300px;background:#fff;border-radius:8px;
+  box-shadow:0 5px 15px rgba(0,0,0,.3);
+  display:none;z-index:10000
+}
+#chatbot header{background:#4B88C4;color:#fff;padding:10px}
+#chatbot .body{padding:10px;height:200px;overflow:auto}
+#chatbot input{width:100%;padding:8px;border:1px solid #ccc}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:20px;background:#111;color:#4B88C4}
+</style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav class="navbar">
-  <a data-page="home">Home</a>
-  <a data-page="about">About</a>
-  <a data-page="services">Our Services</a>
-  <a data-page="products">Spares Shop</a>
-  <a data-page="contact">Contact</a>
-</nav>
+<header>
+  <h2>HYBRID CENTRE</h2>
+  <nav>
+    <a data-page="home">Home</a>
+    <a data-page="about">About</a>
+    <a data-page="services">Our Services</a>
+    <a data-page="products">Spares Shop</a>
+    <a data-page="cart">Cart</a>
+    <a data-page="payment">Payment</a>
+    <a data-page="locations">Locations</a>
+    <a data-page="contact">Contact</a>
+  </nav>
+</header>
 
 <!-- HOME -->
 <section id="home" class="page active">
-  <h1>Hybrid Vehicle Garage & Spares Shop</h1>
+  <div class="hero">
+    <div>
+      <h1>Garage Services & Hybrid Spares</h1>
+      <button onclick="showPage('services')">View Our Services</button>
+    </div>
+  </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about" class="page">
   <h2>About Us</h2>
-  <p>We are a hybrid vehicle service centre and spare parts supplier based in Nairobi.</p>
+  <p>Hybrid Centre offers professional hybrid diagnostics, repairs, and genuine spare parts.</p>
 </section>
 
 <!-- OUR SERVICES -->
 <section id="services" class="page">
   <h2>Our Services</h2>
-  <div id="servicesContainer"></div>
+  <div class="grid" id="service-grid"></div>
 </section>
+
+<!-- SERVICE DETAIL -->
+<section id="service-detail" class="page"></section>
 
 <!-- PRODUCTS -->
 <section id="products" class="page">
   <h2>Spares Shop</h2>
-  <div id="productsContainer"></div>
+  <div class="grid" id="product-grid"></div>
 </section>
 
 <!-- CART -->
 <section id="cart" class="page">
   <h2>Your Cart</h2>
-  <div id="cartItems"></div>
-  <button onclick="checkoutWhatsApp()">Order via WhatsApp</button>
+  <div id="cart-items"></div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment" class="page">
+  <h2>Payment</h2>
+  <p>M-Pesa Paybill: <strong>222111</strong></p>
 </section>
 
 <!-- LOCATIONS -->
 <section id="locations" class="page">
   <h2>Our Locations</h2>
-  <p>Naivasha Road, Dagoretti Corner (Next to Shell)</p>
-  <p>Industrial Area, Nairobi</p>
+  <p>📍 Kirinyaga Road, Nairobi</p>
+  <p>📍 Naivasha Road, Dagoretti Corner</p>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="page">
-  <h2>Contact Us</h2>
-  <p>Email: hybridcentre@gmail.com</p>
-  <p>WhatsApp 1: +2547XXXXXXX</p>
-  <p>WhatsApp 2: +2547XXXXXXX</p>
+  <h2>Contact</h2>
+  <p>📞 <a href="tel:+254780328599">+254 780 328 599</a></p>
+  <p>📧 hybridcentre@gmail.com</p>
+  <p>
+    <a href="#">Facebook</a> |
+    <a href="#">Instagram</a> |
+    <a href="#">WhatsApp</a>
+  </p>
 </section>
 
 <!-- CHATBOT -->
+<div id="chatbot-toggle"><i class="fa fa-comments"></i></div>
 <div id="chatbot">
-  💬
+  <header>Hybrid Assistant</header>
+  <div class="body" id="chat-log">Hi 👋 How can we help?</div>
+  <input placeholder="Type message…" onkeydown="chat(event)">
 </div>
 
-<script src="script.js"></script>
+<footer>© 2025 Hybrid Centre</footer>
+
+<script>
+/* ===== SPA ===== */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('[data-page]').forEach(a=>{
+  a.onclick=()=>showPage(a.dataset.page);
+});
+
+/* ===== SERVICES JSON ===== */
+fetch('services.json')
+.then(r=>r.json())
+.then(data=>{
+  const g=document.getElementById('service-grid');
+  data.forEach(s=>{
+    g.innerHTML+=`
+      <div class="card">
+        <h3>${s.title}</h3>
+        <p>${s.shortDescription}</p>
+        <button onclick="openService('${s.id}')">Read More</button>
+      </div>`;
+  });
+});
+function openService(id){
+  fetch('services.json').then(r=>r.json()).then(d=>{
+    const s=d.find(x=>x.id===id);
+    document.getElementById('service-detail').innerHTML=`
+      <h2>${s.title}</h2>
+      <p>${s.fullDescription}</p>
+      <button onclick="showPage('services')">⬅ Back</button>`;
+    showPage('service-detail');
+  });
+}
+
+/* ===== PRODUCTS ===== */
+const products=[
+ {name:"Hybrid Battery",price:500},
+ {name:"Inverter",price:400},
+ {name:"Electric Motor",price:750}
+];
+const pg=document.getElementById('product-grid');
+products.forEach(p=>{
+  pg.innerHTML+=`
+   <div class="card">
+    <h3>${p.name}</h3>
+    <p>KES ${p.price}</p>
+    <button onclick="addCart('${p.name}',${p.price})">Add to Cart</button>
+   </div>`;
+});
+
+/* ===== CART ===== */
+let cart=[];
+function addCart(n,p){
+  cart.push({n,p});
+  document.getElementById('cart-items').innerHTML=
+    cart.map(i=>`${i.n} - KES ${i.p}`).join('<br>');
+}
+
+/* ===== CHATBOT ===== */
+const toggle=document.getElementById('chatbot-toggle');
+const bot=document.getElementById('chatbot');
+toggle.onclick=()=>bot.style.display=bot.style.display==='block'?'none':'block';
+function chat(e){
+  if(e.key==='Enter'){
+    document.getElementById('chat-log').innerHTML+=`<br>You: ${e.target.value}`;
+    e.target.value='';
+  }
+}
+</script>
+
 </body>
 </html>
