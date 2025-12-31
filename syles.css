@@ -1,0 +1,265 @@
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Poppins, Arial, sans-serif;
+}
+body {
+    background: #f5f5f5;
+    color: #000;
+    font-weight: bold;
+}
+.hidden-section {
+    display: none;
+}
+
+/* ================= HEADER / NAVBAR ================= */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #4888C4; /* navbar blue */
+    color: #fff;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+nav a, nav button {
+    color: #fff;
+    background: none;
+    border: none;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+nav a.active {
+    color: #FFD700;
+    border-bottom: 2px solid #fff;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+.logo {
+    height: 80px;
+    margin-right: 10px;
+}
+.menu-toggle {
+    display: none;
+    font-size: 22px;
+    color: #fff;
+    background: none;
+    border: none;
+}
+@media(max-width:768px) {
+    nav {
+        display: none;
+        flex-direction: column;
+        background: #222;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+    nav.open {
+        display: flex;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    nav a, nav button {
+        padding: 15px;
+        border-top: 1px solid #333;
+    }
+}
+
+/* ================= HERO ================= */
+.hero {
+    height: 400px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+    z-index: 1;
+}
+.slideshow, .slide {
+    position: absolute;
+    inset: 0;
+}
+.slide {
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.slide.active {
+    opacity: 1;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+.cta-btn {
+    padding: 10px 20px;
+    background: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.cta-btn:hover {
+    background: #005fa3;
+}
+
+/* ================= SECTIONS ================= */
+section {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+    background: #111;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* ================= PRODUCTS ================= */
+.product-grid, .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+.product, .service {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: #000;
+}
+.product img, .service img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.product-icon, .service-icon {
+    font-size: 50px;
+    color: #0077cc;
+    margin-bottom: 10px;
+}
+
+/* ================= CART ================= */
+#cart-items {
+    margin-bottom: 10px;
+}
+.cart-actions {
+    margin-top: 10px;
+}
+#cart-total {
+    margin-top: 10px;
+}
+
+/* ================= MODAL ================= */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ================= CHATBOT ================= */
+.chatbot-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chatbot {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 3000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.chat-header {
+    background: #0077cc;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f5f5f5;
+}
+#chatInput {
+    border: 1px solid #ccc;
+    border-radius: 0 0 0 0;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+#chatSend {
+    border: none;
+    background: #0077cc;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: #4888C4;
+}
+footer a {
+    color: #FFD700;
+    margin: 0 5px;
+}
